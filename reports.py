@@ -2,26 +2,22 @@
 
 import reportlab
 import os
-import datetime
 
+
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus import Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
 #processed.pdf
 
-image_location= os.path.expanduser("~/supplier-data/descriptions/")
-url= "http://[external-IP-address]/fruits"
 
 
-for filename in os.listdir(image_location):
-    fruit_list= ['name','weight', 'description']
-    listFruitDescription =[]
-    with open(image_location+filename,'r')as file:
-        for line in file:
-            print(line.strip())
-            listFruitDescription.append(line.strip())
-            
-    fruit_dict= dict(zip(fruit_list,listFruitDescription))
-    fruit_dict['weight']=int(fruit_dict['weight'])
-
-
-if __name__ == "__main__":
-
+    
+def generate_report(filename, title, additional_info):
+    styles = getSampleStyleSheet()
+    report = SimpleDocTemplate(filename)
+    report_title = Paragraph(title, styles["h1"])
+    report_info = Paragraph(additional_info, styles["BodyText"])
+    empty_line = Spacer(1,20)
+    report.build([report_title, empty_line, report_info, empty_line])
 
